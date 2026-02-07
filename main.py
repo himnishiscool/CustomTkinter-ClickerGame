@@ -1,22 +1,22 @@
 import customtkinter as ctk
-from functions import *
 
 # --- Constants ---
 ctk.set_appearance_mode("dark")
-
-MENU_WIDTH = 350
 
 ROOT_FG = "#181711"
 BUTTON_FG = "#4381C1"
 BUTTON_HOVER = "#3870A8"
 BORDER_COLOR = "#191919"
 
+# --- Other Variables ---
+upgrades_menu_visible = False
+
 # --- Window ---
 root = ctk.CTk()
 root.geometry("1080x2400")
 root.title("Clicker Game")
 root.configure(
-    fg_color="#191919",
+    fg_color=ROOT_FG,
 )
 
 root.grid_rowconfigure(0, weight=1)
@@ -25,6 +25,20 @@ root.grid_rowconfigure(2, weight=1)
 root.grid_columnconfigure(0, weight=1)
 root.grid_columnconfigure(1, weight=1)
 root.grid_columnconfigure(2, weight=1)
+
+# --- Functions ---
+def upgrades_menu_toggle():
+    global upgrades_menu_visible
+
+    if upgrades_menu_visible:
+        upgrades_menu.place_forget()
+        upgrades_menu_visible = False
+    else:
+        upgrades_menu.place(
+            x=730,
+            y=0
+        )
+        upgrades_menu_visible = True
 
 # --- Main button ---
 clicker_button = ctk.CTkButton(
@@ -42,24 +56,24 @@ clicker_button.grid(
 # --- Upgrades menu ---
 upgrades_menu = ctk.CTkScrollableFrame(
     root,
-    width=MENU_WIDTH,
+    width=350,
     height=2400,
     fg_color=BUTTON_HOVER,
 )
 upgrades_menu.place(
-    x=1080,  # start offscreen
+    x=730,
     y=0
 )
 
 hamburger_button = ctk.CTkButton(
     root,
-    width=100,
+    width=120,
     height=100,
     text="☰",
     fg_color=BUTTON_FG,
     hover_color=BUTTON_HOVER,
     font=("SF Display", 100),
-    command=upgrade_menu_toggle(upgrades_menu),
+    command=upgrades_menu_toggle,
 )
 hamburger_button.grid(
     row=0,
